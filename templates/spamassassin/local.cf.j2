@@ -15,6 +15,13 @@ rewrite_header {{ spamassassin_rewrite_header }}
 {% else %}
 # rewrite_header {{ spamassassin_rewrite_header }}
 {% endif %}
+{% for header in spamassassin_add_headers %}
+add_header {{ header }}
+{% endfor %}
+
+{% if spamassassin_ok_locales | length > 0 %}
+ok_locales {{ spamassassin_ok_locales | join(' ') }}
+{% endif %}
 
 #   Save spam messages as a message/rfc822 MIME attachment instead of
 #   modifying the original message (0: off, 2: use text/plain instead)
@@ -66,6 +73,12 @@ bayes_auto_learn {{ spamassassin_bayes_auto_learn }}
 # bayes_auto_learn 1
 {% for header in spamassassin_bayes_ignore_header %}
 bayes_ignore_header {{ header }}
+{% endfor %}
+{% for rcpt in spamassassin_bayes_ignore_to %}
+bayes_ignore_to {{ rcpt }}
+{% endfor %}
+{% for sender in spamassassin_bayes_ignore_from %}
+bayes_ignore_from {{ sender }}
 {% endfor %}
 
 #   Some shortcircuiting, if the plugin is enabled

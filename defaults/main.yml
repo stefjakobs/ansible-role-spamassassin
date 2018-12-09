@@ -1,7 +1,7 @@
 ---
 ## general
-spamassassin_user: spamd
-spamassassin_home_dir: /var/log/spamassassin/
+spamassassin_user: debian-spamd
+spamassassin_home_dir: /var/lib/spamassassin/
 
 ## file: /etc/default/spamassassin
 
@@ -15,6 +15,13 @@ spamassassin_pidfile: /var/run/spamd.pid
 # Rewrite the mail header?
 spamassassin_rewrite_header_enabled: false
 spamassassin_rewrite_header: "Subject *****SPAM*****"
+spamassassin_add_headers: []
+
+# This option is used to specify which locales are considered OK for
+# incoming mail.  Mail using the character sets that are allowed by
+# this option will not be marked as possibly being spam in a foreign
+# language. (e.g. [en, de];  [all])
+spamassassin_ok_locales: []
 
 # Allowed 0, 1, 2 see
 # https://spamassassin.apache.org/full/3.0.x/dist/doc/Mail_SpamAssassin_Conf.html
@@ -52,10 +59,37 @@ spamassassin_bayes_ignore_header:
   - X-Bogosity
   - X-Spam-Flag
   - X-Spam-Status
+# Bayesian classification and autolearning will not be performed
+# on mail to the listed addresses.
+spamassassin_bayes_ignore_to: []
+# Bayesian classification and autolearning will not be performed
+# on mail from the listed addresses.
+spamassassin_bayes_ignore_from: []
 
 ## file: /etc/spamassassin/whitelist.cf
 # manual whitelisting
-spamassassin_whitelist: []
+# e.g.
+# spamassassin_whitelist:
+#   from:
+#   - foo@example.com
+#   from_rcvd:
+#   - 'bar@example.com example.com'
+spamassassin_whitelist: {}
+spamassassin_unwhitelist: {}
+
+## file: /etc/spamassassin/blacklist.cf
+# manual blacklisting
+spamassassin_blacklist: {}
+spamassassin_unblacklist: {}
+
+## file: /etc/spamassassin/custom.cf
+# other custom rules
+spamassassin_custom_rules: {}
+
+## file: /etc/spamassassin/*.pre
+# enable/disable plugins
+spamassassin_enable_plugins: []
+spamassassin_disable_plugins: []
 
 # Add addtional update channels, which should be updates by the daily
 # sa-update cronjob. E.g.:

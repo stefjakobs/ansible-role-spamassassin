@@ -3,13 +3,16 @@
   service:
     name: spamassassin
     state: restarted
+  when: spamassassin_enabled
 
 - name: reload spamassassin
   service:
     name: spamassassin
     state: reloaded
+  when: spamassassin_enabled
 
 - name: restart monit
   service:
     name: monit
     state: restarted
+  when: spamassassin_monit_enabled

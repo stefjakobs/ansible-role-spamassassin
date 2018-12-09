@@ -1,0 +1,6 @@
+# custom rules
+# {{ ansible_managed }}
+
+{% for rule, pattern in spamassassin_custom_rules %}
+{{ rule }} {{ pattern }}
+{% endfor %}

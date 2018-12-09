@@ -6,10 +6,8 @@
 
 - name: ensure pyzor is installed
   apt:
-    pkg: "{{ item }}"
-    state: installed
-  with_items:
-    - pyzor
+    pkg: pyzor
+    state: present
 
 - name: ensure pyzor discovered mail configuration after install
   command: pyzor --homedir {{ spamassassin_pyzor_config_dir }} discover

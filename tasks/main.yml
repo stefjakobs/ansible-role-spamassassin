@@ -1,13 +1,8 @@
 ---
-
 - name: ensure spamassassin is installed
   apt:
-    pkg: "{{ item }}"
-    state: installed
-  with_items:
-    - spamassassin
-    - spamc
-    - libmail-dkim-perl
+    pkg: ['spamassassin', 'spamc', 'libmail-dkim-perl']
+    state: present
 
 - name: ensure spamd group is present
   group:
@@ -19,7 +14,7 @@
     name: "{{ spamassassin_user }}"
     shell: /bin/false
     home: "{{ spamassassin_home_dir }}"
-    groups: spamd
+    groups: "{{ spamassassin_user }}"
     append: yes
 
 - name: ensure spamassassin's directories are present
@@ -32,6 +27,22 @@
     - "{{ spamassassin_home_dir }}"
     - "{{ spamassassin_bayes_path }}"
 
+- name: enable spamassin modules
+  lineinfile:
+    path: "/etc/spamassassin/{{ spamassassin_plugin_defaults[item].config }}"
+    state: present
+    regexp: "^#?loadplugin Mail::SpamAssassin::Plugin::{{ item }}"
+    line: "loadplugin Mail::SpamAssassin::Plugin::{{ item }}"
+  loop: "{{ spamassassin_enable_plugins }}"
+
+- name: disable spamassin modules
+  lineinfile:
+    path: "/etc/spamassassin/{{ spamassassin_plugin_defaults[item].config }}"
+    state: present
+    regexp: "^#?loadplugin Mail::SpamAssassin::Plugin::{{ item }}"
+    line: "#loadplugin Mail::SpamAssassin::Plugin::{{ item }}"
+  loop: "{{ spamassassin_disable_plugins }}"
+
 - name: ensure spamassassin config is latest
   template:
     src: default/spamassassin.j2
@@ -41,23 +52,19 @@
     mode: 0644
   notify: restart spamassassin
 
-- name: ensure spamassassin default rules file is latest
+- name: ensure spamassassin rule files are latest
   template:
-    src: spamassassin/local.cf.j2
-    dest: /etc/spamassassin/local.cf
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart spamassassin
-
-- name: ensure spamassassin whitelist is latest
-  template:
-    src: spamassassin/whitelist.cf.j2
-    dest: /etc/spamassassin/whitelist.cf
+    src: "spamassassin/{{ item }}.cf.j2"
+    dest: "/etc/spamassassin/{{ item }}.cf"
     owner: root
     group: root
     mode: 0644
   notify: reload spamassassin
+  loop:
+  - local
+  - custom
+  - whitelist
+  - blacklist
 
 - name: ensure spamassassin ruleupdate cronjob is latest
   template:

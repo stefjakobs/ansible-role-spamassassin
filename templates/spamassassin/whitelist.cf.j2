@@ -1,6 +1,10 @@
 # manual whitelisting
 # {{ ansible_managed }}
 
-{% for pattern in spamassassin_whitelist %}
-whitelist_from {{ pattern }}
+{% for type in spamassassin_whitelist %}
+{% if type in ['from', 'from_rcvd', 'allows_relays', 'to', 'auth', 'uri_host'] %}
+{% for pattern in spamassassin_whitelist[type] %}
+whitelist_{{ type }} {{ pattern }}
+{% endfor %}
+{% endif %}
 {% endfor %}

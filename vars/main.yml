@@ -1,0 +1,110 @@
+---
+spamassassin_plugin_defaults:
+  DCC:
+    config: v310.pre
+    enabled: false
+  Pyzor:
+    config: v310.pre
+    enabled: true
+  Razor2:
+    config: v310.pre
+    enabled: true
+  SpamCop:
+    config: v310.pre
+    enabled: true
+  AntiVirus:
+    config: v310.pre
+    enabled: false
+  AWL:
+    config: v310.pre
+    enabled: false
+  AutoLearnThreshold:
+    config: v310.pre
+    enabled: true
+  TextCat:
+    config: v310.pre
+    enabled: false
+  AccessDB:
+    config: v310.pre
+    enabled: false
+  WhiteListSubject:
+    config: v310.pre
+    enabled: true
+  MIMEHeader:
+    config: v310.pre
+    enabled: true
+  ReplaceTags:
+    config: v310.pre
+    enabled: true
+  DKIM:
+    config: v312.pre
+    enabled: true
+  Check:
+    config: v320.pre
+    enabled: true
+  HTTPSMismatch:
+    config: v320.pre
+    enabled: true
+  URIDetail:
+    config: v320.pre
+    enabled: true
+  Shortcircuit:
+    config: v320.pre
+    enabled: false
+  Bayes:
+    config: v320.pre
+    enabled: true
+  BodyEval:
+    config: v320.pre
+    enabled: true
+  DNSEval:
+    config: v320.pre
+    enabled: true
+  HTMLEval:
+    config: v320.pre
+    enabled: true
+  HeaderEval:
+    config: v320.pre
+    enabled: true
+  MIMEEval:
+    config: v320.pre
+    enabled: true
+  RelayEval:
+    config: v320.pre
+    enabled: true
+  URIEval:
+    config: v320.pre
+    enabled: true
+  WLBLEval:
+    config: v320.pre
+    enabled: true
+  VBounce:
+    config: v320.pre
+    enabled: true
+  Rule2XSBody:
+    config: v320.pre
+    enabled: false
+  ASN:
+    config: v320.pre
+    enabled: false
+  ImageInfo:
+    config: v320.pre
+    enabled: true
+  PhishTag:
+    config: v330.pre
+    enabled: false
+  FreeMail:
+    config: v330.pre
+    enabled: true
+  AskDNS:
+    config: v340.pre
+    enabled: true
+  TxRep:
+    config: v341.pre
+    enabled: false
+  URILocalBL:
+    config: v341.pre
+    enabled: false
+  PDFInfo:
+    config: v341.pre
+    enabled: false

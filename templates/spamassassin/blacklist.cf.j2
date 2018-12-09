@@ -1,0 +1,10 @@
+# manual blacklisting
+# {{ ansible_managed }}
+
+{% for type in spamassassin_blacklist %}
+{% if type in ['from', 'from_rcvd', 'allows_relays', 'to', 'auth', 'uri_host'] %}
+{% for pattern in spamassassin_blacklist[type] %}
+blacklist_{{ type }} {{ pattern }}
+{% endfor %}
+{% endif %}
+{% endfor %}
